@@ -20,8 +20,14 @@ function handleTurn(response: string, enemy: Entity, player: Entity) {
                 console.log(`You attack the ${enemy.name} ! Dealing ${player.str} of damage !!\n`)
                 enemy.hp -= player.str
                 if (enemy.hp > 0) {
-                    player.hp -= enemy.str
-                    console.log(`the ${enemy.name} attack ! You lost ${enemy.str} hp !`)
+                    const random = Math.floor(Math.random() * (100 - 1 + 1) + 1)
+                    if (random <= dodge) {
+                        console.log("You dodged !!!")
+                    }
+                    else {
+                        player.hp -= enemy.str
+                        console.log(`the ${enemy.name} attack ! You lost ${enemy.str} hp !`)
+                    }
                 }
             }
             else {
