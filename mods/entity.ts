@@ -1,14 +1,17 @@
 export default interface Entity {
+    maxmp: any;
     id: number,
     name: string,
     hp: number,
     maxhp: number,
+    mp: number
     str: number,
     def: number,
     res: number,
     spd: number,
     luck: number,
-    rarity: number
+    rarity: number,
+    class: number
 }
 const fs = require("fs");
 export function readJSON(file: string) {
@@ -46,7 +49,7 @@ function getRarityAndArray(data: Entity[]) {
 export function getRandomEntity(path: string) {
     const data: Entity[] = readJSON(path);
     let dataId = getRarityAndArray(readJSON(path));
-    let entity: Entity = { name: "", id: 1, hp: 1, maxhp: 1, str: 1, spd: 1, def: 1, res: 1, rarity: 1, luck: 10 }
+    let entity: Entity = { name: "", id: 1, hp: 1, maxhp: 1, str: 1, mp:1, spd: 1, def: 1, res: 1, rarity: 1, luck: 10, class: 1, maxmp: 1 }
     for (let i = 0; i < data.length; i += 1) {
         if (data[i].id === dataId) {
             entity = data[i]

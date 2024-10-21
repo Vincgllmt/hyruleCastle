@@ -6,30 +6,33 @@ const readline = require('readline-sync')
 export function msleep(n: number) {
     Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, n);
 }
-function handleHpDisplay(entity: Entity) {
+function handleHpAndMpDisplay(entity: Entity) {
     if (entity.hp <= (entity.maxhp / 2) && entity.hp > ((entity.maxhp / 2) / 2)) {
-        console.log(`\x1b[33mHP: ${entity.hp} / ${entity.maxhp}\x1b[0m\n`)
+        console.log(`\x1b[33mHP: ${entity.hp} / ${entity.maxhp}\x1b[0m`)
+        console.log(`\x1b[36mMP: ${entity.mp} / ${entity.maxmp}\x1b[0m\n`)
     }
     else if (entity.hp <= ((entity.maxhp / 2) / 2)) {
-        console.log(`\x1b[31mHP: ${entity.hp} / ${entity.maxhp}\x1b[0m\n`)
+        console.log(`\x1b[31mHP: ${entity.hp} / ${entity.maxhp}\x1b[0m`)
+        console.log(`\x1b[36mMP: ${entity.mp} / ${entity.maxmp}\x1b[0m\n`)
     }
     else {
-        console.log(`HP: ${entity.hp} / ${entity.maxhp}\n`)
+        console.log(`HP: ${entity.hp} / ${entity.maxhp}`)
+        console.log(`\x1b[36mMP: ${entity.mp} / ${entity.maxmp}\x1b[0m\n`)
     }
 }
 function combatDisplay(index: number, enemy: Entity, player: Entity) {
     console.log(`========== fight ${index} ==========`)
     console.log(`\x1b[31m${enemy.name}\x1b[0m`)
-    handleHpDisplay(enemy)
+    handleHpAndMpDisplay(enemy)
     console.log(`\x1b[32m${player.name}\x1b[0m`)
-    handleHpDisplay(player)
+    handleHpAndMpDisplay(player)
     console.log(`---YOUR TURN---\n`)
 }
 export default function combat(index: number, enemy: Entity, player: Entity) {
     let continu = true
     while (enemy.hp > 0 && player.hp > 0 && continu === true) {
         combatDisplay(index, enemy, player);
-        let res = readline.question("1. Attack      2. Heal\n3. Protect     4. Escape\n")
+        let res = readline.question("1. Attack      2. Skills\n3. Protect     4. Escape\n")
         continu = handleTurn(res, enemy, player)
         msleep(500);
     }
