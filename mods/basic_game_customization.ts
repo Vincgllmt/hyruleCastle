@@ -36,7 +36,7 @@ export default function titleScreen() {
 export function difficulty() {
     console.clear()
     console.log('choose the difficulty :')
-    let res: string = readline.question('1. Normal\n2. Hard (enemy hit at 1.5 of their normal strength)\n3. Insane (enemy hit at 2 of their normal strength')
+    let res: string = readline.question('1. Normal\n2. Hard (enemy hit at 1.5 of their normal strength)\n3. Insane (enemy hit at 2 of their normal strength)\n')
     while (res !== '1' && res !== '2' && res !== '3') {
         res = readline.question('choose the number of the difficulty !')
     }
