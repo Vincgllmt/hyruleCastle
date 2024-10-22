@@ -1,45 +1,88 @@
+import { getCharacter, getStrongest, getWeakness } from "./basic_characteristics";
 import { msleep } from "./combat";
 import Entity from "./entity";
 import { loadSkill, showSkills, Skill } from "./magic_skills";
 
 const readline = require('readline-sync')
-function handleTurnAttack(playerFirstTurn: boolean, enemy: Entity, player: Entity, difficulty: number) {
-    const enemyAtk = Math.floor(enemy.str * difficulty)
-    const dodge = player.spd - enemy.spd
+function attack(caster: Entity, target: Entity) {
+    let attack = caster.str
+    const weakRace = getWeakness(caster, 1)
+    const strengthRace = getStrongest(caster, 1)
+    const weakClass = getWeakness(caster, 2)
+    const strengthClass = getStrongest(caster, 2)
+    let weak = false;
+    let strong = false;
+    let luck = false;
+    const dodge = caster.spd - target.spd
+    let dodgePossible = false;
     const randomDodge = Math.floor(Math.random() * (100 - 1 + 1) + 1)
-    if (playerFirstTurn) {
-        const random = Math.floor(Math.random() * (100 - 1 + 1) + 1)
-        if (random <= player.luck) {
-            console.log(`CRITICAL HIT | You attack the ${enemy.name} ! Dealing ${(player.str * 2) - enemy.def} of damage !! `)
-            enemy.hp -= (player.str * 2) - enemy.def
+    const randomCrit = Math.floor(Math.random() * (100 - 1 + 1) + 1)
+    // weakRace
+    if (weakRace.includes(target.race)) {
+        attack = attack / 2
+        weak = true
+    }
+    // weakClass
+    if (weakClass.includes(target.class)) {
+        attack = attack / 2
+        weak = true
+    }
+    // strengthRace
+    if (strengthRace.includes(target.race)) {
+        attack = attack * 2
+        strong = true
+    }
+    // strengthRace
+    if (strengthClass.includes(target.class)) {
+        attack = attack * 2
+        strong = true
+    }
+    if (randomCrit <= target.luck) {
+        luck = true
+        attack = attack * 2
+    }
+    if (randomDodge <= dodge) {
+        dodgePossible = true
+    }
+    if (dodgePossible !== true) {
+        if (luck) {
+            if (weak && !strong) {
+                console.log(`${caster.name} make a glancing hit.. But with a crit !`)
+            }
+            if (!weak && strong) {
+                console.log(`${caster.name} make a crushing hit and a crit !`)
+            }
+            console.log(`CRITICAL HIT | ${caster.name} attack the ${target.name} ! Dealing ${(attack) - target.def} of damage !! `)
+            target.hp -= attack - target.def
         }
         else {
-            console.log(`You attack the ${enemy.name} ! Dealing ${player.str - enemy.def} of damage !!\n`)
-            enemy.hp -= player.str - enemy.def
-        }
-        if (enemy.hp > 0) {
-            if (randomDodge <= dodge) {
-                console.log("You dodged !!!")
+            if (weak && !strong) {
+                console.log(`${caster.name} make a glancing hit..`)
             }
-            else {
-                player.hp -= enemyAtk - player.def
-                console.log(`the ${enemy.name} attack ! You lost ${enemyAtk - player.def} hp !`)
+            if (!weak && strong) {
+                console.log(`${caster.name} make a crushing hit !`)
             }
+            console.log(`${caster.name} attack the ${target.name} ! Dealing ${(attack) - target.def} of damage.`)
+            target.hp -= attack - target.def
         }
     }
     else {
-        player.hp -= enemyAtk - player.def
-        console.log(`the ${enemy.name} attack ! You lost ${enemyAtk} hp !`)
-        if (player.hp > 0) {
-            const random = Math.floor(Math.random() * (100 - 1 + 1) + 1)
-            if (random <= player.luck) {
-                console.log(`CRITICAL HIT | You attack the ${enemy.name} ! Dealing ${(player.str * 2) - enemy.def} of damage !! `)
-                enemy.hp -= player.str * 2
-            }
-            else {
-                console.log(`You attack the ${enemy.name} ! Dealing ${player.str - enemy.def} of damage !!\n`)
-                enemy.hp -= player.str - enemy.def
-            }
+        console.log(`${target.name} dodged !`)
+    }
+}
+function skill(caster: Entity, target: Entity) {}
+function handleTurnAttack(playerFirstTurn: boolean, enemy: Entity, player: Entity, difficulty: number) {
+    enemy.str = Math.floor(enemy.str * difficulty)
+    if (playerFirstTurn) {
+        attack(player, enemy);
+        if (enemy.hp > 0) {
+            attack(enemy, player);
+        } 
+    }
+    else {
+        attack(enemy, player);
+        if (enemy.hp > 0) {
+            attack(player, enemy)
         }
     }
 }
@@ -94,7 +137,7 @@ function handleTurnSkills(player: Entity, enemy: Entity, spells: Skill[], diffic
 }
 export default function handleTurn(response: string, enemy: Entity, player: Entity, difficulty: number) {
     const enemyAtk = Math.floor(enemy.str * difficulty)
-    const param = ['attack', '1', '2', 'skills', '3', 'Protect', '4', 'Escape'];
+    const param = ['attack', '1', '2', 'skills', '3', 'protect', '4', 'escape', '5', 'character'];
     const playerFirstTurn = enemy.spd < player.spd
     let continu = true;
     while (param.indexOf(response.toLowerCase()) === -1) {
@@ -127,6 +170,11 @@ export default function handleTurn(response: string, enemy: Entity, player: Enti
                     continu = false;
                 }
             }
+            break;
+        }
+        case '5':
+        case 'character': {
+            getCharacter(player)
             break;
         }
         default: {
