@@ -46,6 +46,7 @@ function continueGame(savefile: SaveFile) {
     }
     if (stillAlive && stillAliveBoss && next) {
         console.log('You conquered all the floors ! Good job !')
+        fs.rmSync('resources/.saveFile.json')
     }
     else if (!stillAlive || !stillAliveBoss) {
         console.log("Game Over...")

@@ -30,9 +30,7 @@ export function loadSkill(player: Entity) {
                 }
             }
         }
-        else if (spells[i].class === getNameClass(player)) {
-        }
-        else {
+        else if (spells[i].class === getNameClass(player) || spells[i].class === '') {
             skillArray.push(spells[i])
         }
     }
