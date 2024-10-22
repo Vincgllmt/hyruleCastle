@@ -1,5 +1,7 @@
-const readline = require('readline-sync')
+import Entity from "./entity"
+import { getSave } from "./save"
 
+const readline = require('readline-sync')
 function headTailTitle() {
     console.log('        -------------------------------------------------------')
     console.log('       /\\                                                     /\\')
@@ -17,21 +19,40 @@ function styleTitle() {
     console.log('         )                                                      )')
     console.log('        (                                                      (')
     headTailTitle()
-    
+
 }
 export default function titleScreen() {
-    let param: string[] = ['1','2','new game','quit the game']
     styleTitle()
-    let res: string = readline.question('                   1. New Game     2. Quit the game\n')
-    while (param.indexOf(res.toLowerCase()) === -1) {
-        res = readline.question('                   1. New Game     2. Quit the game')
-    }
-    if (res === '1' || res.toLocaleLowerCase() === 'new game') {
-        return true;
+    if (getSave('resources/.saveFile.json') !== false) {
+        let param: string[] = ['1', '2', 'new game', 'quit the game', '3', 'continue']
+        let res: string = readline.question('                   1. New Game     2. Quit the game    3. Continue\n')
+        while (param.indexOf(res.toLowerCase()) === -1) {
+            res = readline.question('                   1. New Game     2. Quit the game    3. Continue')
+        }
+        if (res === '1' || res.toLocaleLowerCase() === 'new game') {
+            return 1;
+        }
+        if (res === '2' || res.toLocaleLowerCase() === 'quit the game') {
+            return 2
+        }
+        else {
+            return 3
+        }
     }
     else {
-        return false;
+        let param: string[] = ['1', '2', 'new game', 'quit the game']
+        let res: string = readline.question('                   1. New Game     2. Quit the game\n')
+        while (param.indexOf(res.toLowerCase()) === -1) {
+            res = readline.question('                   1. New Game     2. Quit the game')
+        }
+        if (res === '1' || res.toLocaleLowerCase() === 'new game') {
+            return 1;
+        }
+        if (res === '2' || res.toLocaleLowerCase() === 'quit the game') {
+            return 2
+        }
     }
+
 }
 export function difficulty() {
     console.clear()
