@@ -9,7 +9,7 @@ export interface Skill {
     class: string,
     effect: string
 }
-function getNameClass(player: Entity) {
+export function getNameClass(player: Entity) {
     const classes = readJSON('resources/classes.json')
     for (let i = 0; i < classes.length; i += 1) {
         if (classes[i].id === player.class) {

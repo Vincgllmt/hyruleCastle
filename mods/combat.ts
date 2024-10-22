@@ -32,7 +32,7 @@ export default function combat(index: number, enemy: Entity, player: Entity, dif
     let continu = true
     while (enemy.hp > 0 && player.hp > 0 && continu === true) {
         combatDisplay(index, enemy, player);
-        let res = readline.question("1. Attack      2. Skills\n3. Protect     4. Escape\n")
+        let res = readline.question("1. Attack      2. Skills\n3. Protect     4. Escape\n5. Character\n")
         continu = handleTurn(res, enemy, player, difficulty)
         msleep(500);
     }
