@@ -56,3 +56,12 @@ export function difficulty() {
     }
     return diffModifier
 }
+export function setFloor() {
+    console.clear()
+    console.log('choose the number of floor:')
+    let res: string = readline.question('10.\n20.\n50.\n100.')
+    while (res !== '10' && res !== '20' && res !== '50' && res !== '100') {
+        res = readline.question('Choose between the correct options\n10.\n20.\n50.\n100.')
+    }
+    return res
+}
