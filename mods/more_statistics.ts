@@ -71,11 +71,23 @@ function handleTurnSkills(player: Entity, enemy: Entity, spells: Skill[]) {
         const splitted = skill.effect.split('_')
         if (splitted[0].toLowerCase() === 'heal') {
             player.hp += +splitted[1]
+            const diff = player.hp - player.maxhp
+            if (diff > 0) {
+                player.hp -= diff
+            }
             console.log(`You healed of ${splitted[1]} hp !`)
+            console.log(`the ${enemy.name} attack ! You lost ${enemy.str - player.def} hp !`)
+            player.hp -= enemy.str - player.def
         }
         else {
             player.mp += +splitted[1]
+            const diff = player.mp - player.maxmp
+            if (diff > 0) {
+                player.mp -= diff
+            }
             console.log(`You restored of ${splitted[1]} mp !`)
+            console.log(`the ${enemy.name} attack ! You lost ${enemy.str - player.def} hp !`)
+            player.hp -= enemy.str - player.def
         }
     }
 
