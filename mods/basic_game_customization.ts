@@ -25,9 +25,9 @@ export default function titleScreen() {
     styleTitle()
     if (getSave('resources/.saveFile.json') !== false) {
         let param: string[] = ['1', '2', 'new game', 'quit the game', '3', 'continue']
-        let res: string = readline.question('                   1. New Game     2. Quit the game    3. Continue\n')
+        let res: string = readline.question('           1. New Game     2. Quit the game    3. Continue\n')
         while (param.indexOf(res.toLowerCase()) === -1) {
-            res = readline.question('                   1. New Game     2. Quit the game    3. Continue')
+            res = readline.question('           1. New Game     2. Quit the game    3. Continue')
         }
         if (res === '1' || res.toLocaleLowerCase() === 'new game') {
             return 1;
@@ -80,9 +80,9 @@ export function difficulty() {
 export function setFloor() {
     console.clear()
     console.log('choose the number of floor:')
-    let res: string = readline.question('10.\n20.\n50.\n100.')
+    let res: string = readline.question('- 10\n- 20\n- 50\n- 100\n')
     while (res !== '10' && res !== '20' && res !== '50' && res !== '100') {
-        res = readline.question('Choose between the correct options\n10.\n20.\n50.\n100.')
+        res = readline.question('Choose between the correct options\n10.\n20.\n50.\n100.\n')
     }
     return res
 }
