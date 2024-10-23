@@ -16,9 +16,9 @@ function continueGame(savefile: SaveFile) {
     while (i <= maxFloor && stillAlive && stillAliveBoss) {
         if (i % 10 === 0) {
             let boss: Entity = getRandomEntity('resources/bosses.json')
-            stillAliveBoss = bossCombat(i, boss, player, challenge);
+            stillAliveBoss = bossCombat(i, boss, savefile.player, challenge);
             if (stillAliveBoss) {
-                next = save(player, i, challenge, maxFloor)
+                next = save(savefile.player, i, challenge, maxFloor, lvl)
                 if (next) {
                     console.log("Congratulations !! Moving to the next floor..")
                     i += 1;
@@ -31,9 +31,9 @@ function continueGame(savefile: SaveFile) {
         }
         else {
             let enemy: Entity = getRandomEntity('resources/enemies.json')
-            stillAlive = combat(i, enemy, player, challenge)
+            stillAlive = combat(i, enemy, savefile.player, challenge)
             if (stillAlive) {
-                next = save(player, i, challenge, maxFloor)
+                next = save(savefile.player, i, challenge, maxFloor, lvl)
                 if (next) {
                     console.log('You win ! Moving to the next floor...')
                     i += 1;
@@ -67,7 +67,7 @@ function main() {
             stillAliveBoss = bossCombat(i, boss, player, challenge);
             if (stillAliveBoss) {
                 setExp(lvl, player)
-                next = save(player, i, challenge, maxFloor)
+                next = save(player, i, challenge, maxFloor, lvl)
                 if (next) {
                     console.log("Congratulations !! Moving to the next floor..")
                     i += 1;
@@ -83,7 +83,7 @@ function main() {
             stillAlive = combat(i, enemy, player, challenge)
             if (stillAlive) {
                 setExp(lvl, player)
-                next = save(player, i, challenge, maxFloor)
+                next = save(player, i, challenge, maxFloor, lvl)
                 if (next) {
                     console.log('You win ! Moving to the next floor...')
                     i += 1;
