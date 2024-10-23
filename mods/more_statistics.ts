@@ -6,7 +6,7 @@ import { loadSkill, showSkills, Skill } from './magic_skills';
 const readline = require('readline-sync');
 
 function attack(caster: Entity, target: Entity) {
-  let casterAttack = caster.str;
+  let casterAttack = Math.floor(caster.str);
   const weakRace = getWeakness(caster, 1);
   const strengthRace = getStrongest(caster, 1);
   const weakClass = getWeakness(caster, 2);
@@ -46,28 +46,27 @@ function attack(caster: Entity, target: Entity) {
     dodgePossible = true;
   }
   if (dodgePossible !== true) {
-    if (luck) {
-      if (weak && !strong) {
-        console.log(`${caster.name} make a glancing hit.. But with a crit !`);
-      }
-      if (!weak && strong) {
-        console.log(`${caster.name} make a crushing hit and a crit !`);
-      }
-      console.log(`CRITICAL HIT | ${caster.name} attack the ${target.name} ! Dealing ${(casterAttack) - target.def} of damage !! `);
+    if (weak && !strong) {
+      console.log(`${caster.name} made a glancing hit.. !`);
+    }
+    if (!weak && strong) {
+      console.log(`${caster.name} made a crushing hit !`);
+    }
+    if (casterAttack - target.def <= 0) {
+      console.log(`${caster.name} is too weak to make a hit !`)
+    }
+    else {
       target.hp -= casterAttack - target.def;
-    } else {
-      if (weak && !strong) {
-        console.log(`${caster.name} make a glancing hit..`);
+      if (luck) {
+        console.log(`CRITICAL HIT | ${caster.name} attack the ${target.name} ! Dealing ${(casterAttack) - target.def} of damage !! `);
+      } else {
+        console.log(`${caster.name} attack ${target.name} ! Dealing ${(casterAttack) - target.def} of damage.`);
       }
-      if (!weak && strong) {
-        console.log(`${caster.name} make a crushing hit !`);
-      }
-      console.log(`${caster.name} attack the ${target.name} ! Dealing ${(casterAttack) - target.def} of damage.`);
-      target.hp -= casterAttack - target.def;
     }
   } else {
     console.log(`${target.name} dodged !`);
   }
+  msleep(250);
 }
 function skills(caster: Entity, target: Entity, spell: Skill) {
   const weakRace = getWeakness(caster, 1);
@@ -111,28 +110,22 @@ function skills(caster: Entity, target: Entity, spell: Skill) {
       dodgePossible = true;
     }
     if (dodgePossible !== true) {
+      if (weak && !strong) {
+        console.log(`${caster.name} made a glancing hit..`);
+      }
+      if (!weak && strong) {
+        console.log(`${caster.name} made a crushing hit !`);
+      }
+      target.hp -= spellAtk - target.res;
       if (luck) {
-        if (weak && !strong) {
-          console.log(`${caster.name} make a glancing hit.. But with a crit !`);
-        }
-        if (!weak && strong) {
-          console.log(`${caster.name} make a crushing hit and a crit !`);
-        }
-        console.log(`CRITICAL HIT | ${caster.name} attack the ${target.name} ! Dealing ${spellAtk - target.res} of damage !! `);
-        target.hp -= spellAtk - target.res;
+        console.log(`CRITICAL HIT | ${caster.name} used ${spell.name} on ${target.name} ! Dealing ${spellAtk - target.res} of damage !! `);
       } else {
-        if (weak && !strong) {
-          console.log(`${caster.name} make a glancing hit..`);
-        }
-        if (!weak && strong) {
-          console.log(`${caster.name} make a crushing hit !`);
-        }
-        console.log(`${caster.name} attack the ${target.name} ! Dealing ${spellAtk - target.res} of damage.`);
-        target.hp -= spellAtk - target.res;
+        console.log(`${caster.name} used ${spell.name} on ${target.name} ! Dealing ${spellAtk - target.res} of damage.`);
       }
     } else {
       console.log(`${target.name} dodged !`);
     }
+    caster.mp -= spell.cost
   } else if (spell !== undefined && spell.dmg !== 0) {
     const splitted = spell.effect.split('_');
     if (splitted[0].toLowerCase() === 'heal') {
@@ -142,6 +135,7 @@ function skills(caster: Entity, target: Entity, spell: Skill) {
         caster.hp -= diff;
       }
       console.log(`You healed of ${splitted[1]} hp !`);
+      caster.mp -= spell.cost
     } else {
       caster.mp += +splitted[1];
       const diff = caster.mp - caster.maxmp;
@@ -149,8 +143,9 @@ function skills(caster: Entity, target: Entity, spell: Skill) {
         caster.mp -= diff;
       }
       console.log(`You restored of ${splitted[1]} mp !`);
-    }
+    } 
   }
+  msleep(250);
 }
 function handleTurnAttack(playerFirstTurn: boolean, enemy: Entity, player: Entity) {
   if (playerFirstTurn) {
