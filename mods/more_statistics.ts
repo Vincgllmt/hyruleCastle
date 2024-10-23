@@ -168,7 +168,7 @@ function handleTurnAttack(playerFirstTurn: boolean, enemy: Entity, player: Entit
 function handleTurnSkills(player: Entity, enemy: Entity, spells: Skill[]) {
   const playerFirstTurn = enemy.spd < player.spd;
   const skill = showSkills(spells, player);
-  if (skill !== undefined) {
+  if (skill !== false) {
     if (playerFirstTurn) {
       skills(player, enemy, skill);
       if (enemy.hp > 0) {

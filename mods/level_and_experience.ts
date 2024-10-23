@@ -8,9 +8,9 @@ export interface Level {
 function levelUp(lvl: Level, player: Entity) {
   const forbiddenProp = ['id', 'name', 'hp', 'mp', 'rarity', 'class', 'race'];
   console.log(`Level up ! ${player.name} is now level ${lvl.level}`);
-  let randomProp = Object.keys(player)[(Math.random() * Object.keys(player).length)];
+  let randomProp = Object.keys(player)[Math.floor(Math.random() * Object.keys(player).length)];
   while (forbiddenProp.indexOf(randomProp) !== -1) {
-    randomProp = Object.keys(player)[(Math.random() * Object.keys(player).length)];
+    randomProp = Object.keys(player)[Math.floor(Math.random() * Object.keys(player).length)];
   }
   let random = 1;
   switch (randomProp) {
