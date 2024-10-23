@@ -1,5 +1,5 @@
 import Entity, { getRandomEntity } from "./entity"
-import combat, { bossCombat, msleep } from "./combat"
+import combat, { bossCombat, getEnemyDifficulty, msleep } from "./combat"
 import titleScreen, { difficulty, setFloor } from "./basic_game_customization";
 import { getSave, save, SaveFile } from "./save";
 import { Level, setExp } from "./level_and_experience";
@@ -15,7 +15,7 @@ function continueGame(savefile: SaveFile) {
     let next = true;
     while (i <= maxFloor && stillAlive && stillAliveBoss) {
         if (i % 10 === 0) {
-            let boss: Entity = getRandomEntity('resources/bosses.json')
+            let boss: Entity = getEnemyDifficulty(getRandomEntity('resources/bosses.json'),challenge )
             stillAliveBoss = bossCombat(i, boss, savefile.player, challenge);
             if (stillAliveBoss) {
                 next = save(savefile.player, i, challenge, maxFloor, lvl)
@@ -30,7 +30,7 @@ function continueGame(savefile: SaveFile) {
             }
         }
         else {
-            let enemy: Entity = getRandomEntity('resources/enemies.json')
+            let enemy: Entity = getEnemyDifficulty(getRandomEntity('resources/enemies.json'), challenge)
             stillAlive = combat(i, enemy, savefile.player, challenge)
             if (stillAlive) {
                 next = save(savefile.player, i, challenge, maxFloor, lvl)
@@ -63,7 +63,7 @@ function main() {
     let next = true;
     while (i <= maxFloor && stillAlive && stillAliveBoss) {
         if (i % 10 === 0) {
-            let boss: Entity = getRandomEntity('resources/bosses.json')
+            let boss: Entity = getEnemyDifficulty(getRandomEntity('resources/bosses.json'), challenge)
             stillAliveBoss = bossCombat(i, boss, player, challenge);
             if (stillAliveBoss) {
                 setExp(lvl, player)
@@ -79,7 +79,7 @@ function main() {
             }
         }
         else {
-            let enemy: Entity = getRandomEntity('resources/enemies.json')
+            let enemy: Entity = getEnemyDifficulty(getRandomEntity('resources/enemies.json'), challenge)
             stillAlive = combat(i, enemy, player, challenge)
             if (stillAlive) {
                 setExp(lvl, player)

@@ -157,8 +157,7 @@ function skills(caster: Entity, target: Entity, spell: Skill) {
         }
     }
 }
-function handleTurnAttack(playerFirstTurn: boolean, enemy: Entity, player: Entity, difficulty: number) {
-    enemy.str = Math.floor(enemy.str * difficulty)
+function handleTurnAttack(playerFirstTurn: boolean, enemy: Entity, player: Entity) {
     if (playerFirstTurn) {
         attack(player, enemy);
         if (enemy.hp > 0) {
@@ -172,8 +171,7 @@ function handleTurnAttack(playerFirstTurn: boolean, enemy: Entity, player: Entit
         }
     }
 }
-function handleTurnSkills(player: Entity, enemy: Entity, spells: Skill[], difficulty: number) {
-    const enemyAtk = Math.floor(enemy.str * difficulty)
+function handleTurnSkills(player: Entity, enemy: Entity, spells: Skill[]) {
     const playerFirstTurn = enemy.spd < player.spd
     const skill = showSkills(spells, player);
     if (skill !== undefined) {
@@ -192,7 +190,6 @@ function handleTurnSkills(player: Entity, enemy: Entity, spells: Skill[], diffic
     }
 }
 export default function handleTurn(response: string, enemy: Entity, player: Entity, difficulty: number) {
-    const enemyAtk = Math.floor(enemy.str * difficulty)
     const param = ['attack', '1', '2', 'skills', '3', 'protect', '4', 'escape', '5', 'character'];
     const playerFirstTurn = enemy.spd < player.spd
     let continu = true;
@@ -202,12 +199,12 @@ export default function handleTurn(response: string, enemy: Entity, player: Enti
     switch (response) {
         case '1':
         case 'attack': {
-            handleTurnAttack(playerFirstTurn, enemy, player, difficulty)
+            handleTurnAttack(playerFirstTurn, enemy, player)
             break;
         }
         case '3':
         case 'protect': {
-            const newDamage = Math.floor((enemyAtk) - (enemyAtk) * (player.def / 100))
+            const newDamage = Math.floor((enemy.str) - (enemy.str) * (player.def / 100))
             console.log(`You protect ! the ${enemy.name} deals ${newDamage} of damage\n`)
             player.hp -= newDamage - player.def
             break;
@@ -219,8 +216,8 @@ export default function handleTurn(response: string, enemy: Entity, player: Enti
                 continu = false;
             }
             else {
-                player.hp -= enemyAtk
-                console.log(`the ${enemy.name} attack before you leave ! You lost ${(enemyAtk) - player.def} hp !`)
+                player.hp -= enemy.str
+                console.log(`the ${enemy.name} attack before you leave ! You lost ${(enemy.str) - player.def} hp !`)
                 if (player.hp > 0) {
                     console.log(`You escaped...\n`)
                     continu = false;
@@ -234,7 +231,7 @@ export default function handleTurn(response: string, enemy: Entity, player: Enti
             break;
         }
         default: {
-            handleTurnSkills(player, enemy, loadSkill(player), difficulty)
+            handleTurnSkills(player, enemy, loadSkill(player))
             break;
         }
     }

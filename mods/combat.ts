@@ -6,6 +6,24 @@ const readline = require('readline-sync')
 export function msleep(n: number) {
     Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, n);
 }
+export function getEnemyDifficulty(enemy: Entity, difficulty: number): Entity {
+    return {
+         name: enemy.name,
+         id: enemy.id,
+         hp: enemy.hp * difficulty,
+         mp: enemy.mp * difficulty,
+         maxhp: enemy.maxhp * difficulty,
+         maxmp: enemy.maxmp * difficulty,
+         str: enemy.str * difficulty,
+         def: enemy.def * difficulty,
+         res: enemy.res * difficulty,
+         spd: enemy.spd * difficulty,
+         luck: enemy.luck * difficulty,
+         rarity: enemy.rarity,
+         class: enemy.class,
+         race: enemy.race
+        }
+}
 function handleHpAndMpDisplay(entity: Entity) {
     if (entity.hp <= (entity.maxhp / 2) && entity.hp > ((entity.maxhp / 2) / 2)) {
         console.log(`\x1b[33mHP: ${entity.hp} / ${entity.maxhp}\x1b[0m`)
@@ -51,5 +69,5 @@ export function bossCombat(index: number, boss: Entity, player: Entity, difficul
     msleep(1000)
     console.log("Prepare to fight !!!")
     msleep(500)
-    return combat(index, boss, player, difficulty)
+    return combat(index, getEnemyDifficulty(boss, difficulty), player, difficulty)
 }
