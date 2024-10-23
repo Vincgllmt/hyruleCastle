@@ -38,11 +38,11 @@ function handleHpAndMpDisplay(entity: Entity) {
 }
 function combatDisplay(index: number, enemy: Entity, player: Entity) {
   console.log(`========== fight ${index} ==========`);
-  console.log(`\x1b[31m${enemy.name}\x1b[0m`);
+  console.log(`   \x1b[31m${enemy.name}\x1b[0m`);
   handleHpAndMpDisplay(enemy);
-  console.log(`\x1b[32m${player.name}\x1b[0m`);
+  console.log(`   \x1b[32m${player.name}\x1b[0m`);
   handleHpAndMpDisplay(player);
-  console.log('---YOUR TURN---\n');
+  console.log('========== YOUR TURN ==========\n');
 }
 export default function combat(index: number, enemy: Entity, player: Entity) {
   let continu = true;

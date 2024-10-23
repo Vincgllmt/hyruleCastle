@@ -78,5 +78,6 @@ export function setFloor() {
   while (res !== '10' && res !== '20' && res !== '50' && res !== '100') {
     res = readline.question('Choose between the correct options\n10.\n20.\n50.\n100.\n');
   }
+  console.clear()
   return res;
 }
