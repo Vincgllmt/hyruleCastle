@@ -2,9 +2,10 @@ import Entity, { getRandomEntity } from "./entity"
 import combat, { bossCombat, msleep } from "./combat"
 import titleScreen, { difficulty, setFloor } from "./basic_game_customization";
 import { getSave, save, SaveFile } from "./save";
+import { Level, setExp } from "./level_and_experience";
 const fs = require('fs')
 let player: Entity = getRandomEntity('resources/players.json')
-
+let lvl : Level = {expToLvlUp: 50, level: 1, currentExp: 0}
 function continueGame(savefile: SaveFile) {
     const challenge = savefile.difficulty
     const maxFloor = savefile.maxfloor
@@ -65,6 +66,7 @@ function main() {
             let boss: Entity = getRandomEntity('resources/bosses.json')
             stillAliveBoss = bossCombat(i, boss, player, challenge);
             if (stillAliveBoss) {
+                setExp(lvl, player)
                 next = save(player, i, challenge, maxFloor)
                 if (next) {
                     console.log("Congratulations !! Moving to the next floor..")
@@ -80,6 +82,7 @@ function main() {
             let enemy: Entity = getRandomEntity('resources/enemies.json')
             stillAlive = combat(i, enemy, player, challenge)
             if (stillAlive) {
+                setExp(lvl, player)
                 next = save(player, i, challenge, maxFloor)
                 if (next) {
                     console.log('You win ! Moving to the next floor...')
