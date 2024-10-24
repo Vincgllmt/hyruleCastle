@@ -50,7 +50,7 @@ export default function combat(index: number, enemy: Entity, player: Entity, lvl
   let continu: boolean = true;
   while (enemy.hp > 0 && player.hp > 0 && continu === true) {
     combatDisplay(index, enemy, player);
-    const res: string = readline.question('1. Attack      2. Skills\n3. Protect     4. Escape\n5. Character\n6. Inventory');
+    const res: string = readline.question('1. Attack      2. Skills\n3. Protect     4. Escape\n5. Character   6. Inventory\n');
     continu = handleTurn(res, enemy, player, lvl, inventory);
     msleep(500);
   }

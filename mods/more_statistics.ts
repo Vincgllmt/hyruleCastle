@@ -1,7 +1,7 @@
 import { getCharacter, getStrongest, getWeakness } from './basic_characteristics';
 import { msleep } from './combat';
 import Entity from './entity';
-import { displayInventory, Inventory } from './inventory';
+import { displayInventory, Inventory, useInventoryItem } from './inventory';
 import { Level } from './level_and_experience';
 import { loadSkill, showSkills, Skill } from './magic_skills';
 
@@ -221,7 +221,7 @@ export default function handleTurn(response: string, enemy: Entity, player: Enti
     }
     case '6':
       case 'inventory': {
-        displayInventory(inventory)
+        useInventoryItem(inventory, player, enemy)
         break;
       }
     default: {
