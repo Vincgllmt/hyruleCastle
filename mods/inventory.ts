@@ -16,10 +16,12 @@ export interface Inventory {
 }
 export function displayInventory(inventory: Inventory) {
   let count: number = 0;
+  console.log('========== INVENTORY ==========\n')
   inventory.content.forEach((item) => {
-    console.log(`${count} - ${item.name}\n"${item.desc}"\n${item.bigDesc}\n\n`);
+    console.log(`${count} - ${item.name}\n"${item.desc}"\n${item.bigDesc}\n`);
     count += 1;
   });
+  console.log('===============================')
 }
 export function getItem(inventory: Inventory) {
   const itemData: Item[] = readJSON('resources/items.json');
@@ -27,7 +29,6 @@ export function getItem(inventory: Inventory) {
   let aItem: Item = {
     id: 0, name: '', desc: '', bigDesc: '', rarity: 1, effect: '',
   };
-  console.log(itemId);
   for (let i = 0; i < itemData.length; i += 1) {
     if (itemData[i].id === itemId) {
       aItem = itemData[i];
@@ -77,10 +78,10 @@ export function useInventoryItem(inventory: Inventory, player: Entity, enemy: En
   }
   displayInventory(inventory);
   let res: string = rl.question('What do you want to use ?\n');
-  while (param.indexOf(res) === -1 && res !== 'cancel') {
+  while (param.indexOf(res) === -1 && res !== 'cancel' && res !== '') {
     res = rl.question('Use the id ! Or "cancel"\n');
   }
-  if (res !== 'cancel') {
+  if (res !== 'cancel' && res !== '') {
     console.log(`${inventory.content[+res].name} used !`);
     itemEffect(inventory.content[+res].effect, player, enemy);
     inventory.content.splice(+res, 1);
