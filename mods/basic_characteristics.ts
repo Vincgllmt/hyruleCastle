@@ -1,6 +1,5 @@
 import Entity, { readJSON } from './entity';
 import { Level } from './level_and_experience';
-import { getNameClass } from './magic_skills';
 
 const readline = require('readline-sync');
 
@@ -16,16 +15,7 @@ export interface Classe {
   strengths: number[],
   weaknesses: number[]
 }
-function getNameRace(player: Entity): string {
-  const classes: Classe[] = readJSON('resources/races.json');
-  for (let i = 0; i < classes.length; i += 1) {
-    if (classes[i].id === player.race) {
-      return classes[i].name;
-    }
-  }
-  return '';
-}
-function getRace(player: Entity): Race {
+export function getRace(player: Entity): Race {
   const races: Race[] = readJSON('resources/races.json');
   for (let i = 0; i < races.length; i += 1) {
     if (races[i].id === player.race) {
@@ -34,7 +24,7 @@ function getRace(player: Entity): Race {
   }
   return races[0];
 }
-function getClass(player: Entity): Classe {
+export function getClass(player: Entity): Classe {
   const classes: Classe[] = readJSON('resources/classes.json');
   for (let i = 0; i < classes.length; i += 1) {
     if (classes[i].id === player.class) {
@@ -60,8 +50,8 @@ export function getWeakness(player: Entity, index: number) {
   return classe.weaknesses;
 }
 export function getCharacter(player: Entity, lvl: Level) {
-  console.log(`${player.name}: ${getNameRace(player)}`);
-  console.log(`${getNameClass(player)} level ${lvl.level}`);
+  console.log(`${player.name}: ${getRace(player).name}`);
+  console.log(`${getClass(player).name} level ${lvl.level}`);
   console.log('====================================');
   console.log(`HP: ${player.hp} / ${player.maxhp} | MP: ${player.mp} / ${player.maxmp}`);
   console.log('====================================');

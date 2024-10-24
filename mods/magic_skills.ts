@@ -1,3 +1,4 @@
+import { getClass } from './basic_characteristics';
 import Entity, { readJSON } from './entity';
 
 const readline = require('readline-sync');
@@ -11,15 +12,6 @@ export interface Skill {
   class: string,
   effect: string
 }
-export function getNameClass(player: Entity) {
-  const classes = readJSON('resources/classes.json');
-  for (let i = 0; i < classes.length; i += 1) {
-    if (classes[i].id === player.class) {
-      return classes[i].name.toLowerCase();
-    }
-  }
-  return false;
-}
 export function loadSkill(player: Entity) {
   const skillArray: Skill[] = [];
   const spells: Skill[] = readJSON('resources/spell.json');
@@ -27,11 +19,11 @@ export function loadSkill(player: Entity) {
     if (spells[i].class.includes(';')) {
       const classes = spells[i].class.split(';');
       for (let c = 0; c < classes.length; c += 1) {
-        if (classes[c] === getNameClass(player)) {
+        if (classes[c] === getClass(player).name) {
           skillArray.push(spells[i]);
         }
       }
-    } else if (spells[i].class === getNameClass(player) || spells[i].class === '') {
+    } else if (spells[i].class === getClass(player).name || spells[i].class === '') {
       skillArray.push(spells[i]);
     }
   }

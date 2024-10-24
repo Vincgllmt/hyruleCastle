@@ -1,6 +1,5 @@
-import { Classe, Race } from './basic_characteristics';
+import { Classe, getClass, getRace, Race } from './basic_characteristics';
 import Entity, { getRandomEntity, readJSON } from './entity';
-import { getNameClass } from './magic_skills';
 
 const rl = require('readline-sync');
 
@@ -24,19 +23,10 @@ function showAllClass() {
     }
   });
 }
-export function getNameRace(player: Entity) {
-  const races: Race[] = readJSON('resources/races.json');
-  for (let i = 0; i < races.length; i += 1) {
-    if (races[i].id === player.race) {
-      return races[i].name;
-    }
-  }
-  return false;
-}
 function getCharacterSpec(player: Entity) {
   console.log(`name: ${player.name}`);
-  console.log(`class: ${getNameClass(player)}`);
-  console.log(`race: ${getNameRace(player)}`);
+  console.log(`class: ${getClass(player).name}`);
+  console.log(`race: ${getRace(player).name}`);
 }
 function addPointMpHp(player: Entity) {
   const random: number = Math.floor(Math.random() * (100 - 80 + 1) + 80);
@@ -136,3 +126,5 @@ export default function characterCreation(): Entity {
   
   return player;
 }
+
+
