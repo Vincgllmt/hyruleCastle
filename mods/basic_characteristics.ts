@@ -15,34 +15,34 @@ export interface Classe {
   strengths: number[],
   weaknesses: number[]
 }
-function getNameRace(player: Entity) {
-  const classes = readJSON('resources/races.json');
+function getNameRace(player: Entity): string {
+  const classes: Classe[] = readJSON('resources/races.json');
   for (let i = 0; i < classes.length; i += 1) {
     if (classes[i].id === player.race) {
       return classes[i].name;
     }
   }
-  return false;
+  return '';
 }
-function getRace(player: Entity) {
-  const races = readJSON('resources/races.json');
+function getRace(player: Entity): Race {
+  const races: Race[] = readJSON('resources/races.json');
   for (let i = 0; i < races.length; i += 1) {
     if (races[i].id === player.race) {
       return races[i];
     }
   }
-  return false;
+  return races[0];
 }
-function getClass(player: Entity) {
-  const classes = readJSON('resources/classes.json');
+function getClass(player: Entity): Classe {
+  const classes: Classe[] = readJSON('resources/classes.json');
   for (let i = 0; i < classes.length; i += 1) {
     if (classes[i].id === player.class) {
       return classes[i];
     }
   }
-  return false;
+  return classes[0];
 }
-export function getStrongest(player: Entity, index: number) {
+export function getStrongest(player: Entity, index: number): number[] {
   if (index === 1) {
     const race: Race = getRace(player);
     return race.strength;

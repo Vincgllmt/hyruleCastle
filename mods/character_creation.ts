@@ -25,7 +25,7 @@ function showAllClass() {
   });
 }
 export function getNameRace(player: Entity) {
-  const races = readJSON('resources/races.json');
+  const races: Race[] = readJSON('resources/races.json');
   for (let i = 0; i < races.length; i += 1) {
     if (races[i].id === player.race) {
       return races[i].name;
@@ -39,7 +39,7 @@ function getCharacterSpec(player: Entity) {
   console.log(`race: ${getNameRace(player)}`);
 }
 function addPointMpHp(player: Entity) {
-  const random = Math.floor(Math.random() * (100 - 80 + 1) + 80);
+  const random: number = Math.floor(Math.random() * (100 - 80 + 1) + 80);
   console.log(`You have ${random} points to put in MP/HP`);
   let res: string = rl.question('Choose the point you\'ll attribute on HP (the rest will be in MP)\n');
   while (+res > random || +res === 0) {
@@ -58,7 +58,7 @@ function resetStat(player: Entity) {
   player.spd = 0;
 }
 function handleChoice(response: string, player: Entity) {
-  const splittedRes = response.split(' ');
+  const splittedRes: string[] = response.split(' ');
   if (splittedRes.length === 2) {
     switch (splittedRes[0].toLowerCase()) {
       case 'strength': {
@@ -103,20 +103,20 @@ function addPoint(player: Entity) {
     while (!/^\d+$/.test(res.split(' ')[1])) {
       res = rl.question(`you need to type : <spec> <numberOfPoints>\nin what spec you want to add point ? (${points} remaining)`);
     }
-    const nb = +res.split(' ')[1];
+    const nb: number = +res.split(' ')[1];
     if (handleChoice(res, player)) {
       points -= nb;
     }
     console.clear();
   }
 }
-export default function characterCreation() {
-  const player = getRandomEntity('resources/players.json');
+export default function characterCreation(): Entity {
+  const player: Entity = getRandomEntity('resources/players.json');
   if (rl.keyInYN('Do you want to create your own character ?')) {
     console.log('========== Character Creation ==========');
     player.name = rl.question('What is your name ? ');
     ShowAllRace();
-    let response = rl.question('Choose your race (take the id) ');
+    let response: number = rl.question('Choose your race (take the id) ');
     while (response < 0 || response > 17) {
       response = rl.question('Incorrect Id\nChoose your race (take the id) ');
     }
