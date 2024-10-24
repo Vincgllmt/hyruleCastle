@@ -129,9 +129,10 @@ export default function characterCreation(): Entity {
     }
     player.class = +response;
     console.clear();
+    getCharacterSpec(player);
+    addPointMpHp(player);
+    addPoint(player);
   }
-  getCharacterSpec(player);
-  addPointMpHp(player);
-  addPoint(player);
+  
   return player;
 }
