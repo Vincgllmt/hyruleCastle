@@ -20,11 +20,11 @@ export function save(
   difficulty: number,
   maxfloor: number,
   lvl: Level,
-  inventory: Inventory
+  inventory: Inventory,
 ) {
   if (readline.keyInYN('Save and quit ?\n')) {
     const currentSave: SaveFile = {
-      player, floor: index, difficulty, maxfloor, level: lvl, inventory
+      player, floor: index, difficulty, maxfloor, level: lvl, inventory,
     };
     fs.writeFileSync('resources/.saveFile.json', `${JSON.stringify(currentSave)}`);
     return false;
