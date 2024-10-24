@@ -100,7 +100,7 @@ function addPoint(player: Entity) {
     console.log(`luck: ${player.luck}`);
     console.log('you need to type : <spec> <numberOfPoints>\n');
     res = rl.question(`in what spec you want to add point ? (${points} remaining)\n`);
-    while (!/^\d+$/.test(res.split(' ')[1])) {
+    while (!(/^\d+$/.test(res.split(' ')[1])) || +res.split(' ')[1] > points) {
       res = rl.question(`you need to type : <spec> <numberOfPoints>\nin what spec you want to add point ? (${points} remaining)`);
     }
     const nb: number = +res.split(' ')[1];
