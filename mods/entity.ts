@@ -1,3 +1,5 @@
+import { item } from "./inventory";
+
 export default interface Entity {
   maxmp: any;
   id: number,
@@ -20,7 +22,7 @@ export function readJSON(file: string) {
   const jsonFile: string = fs.readFileSync(file, 'utf8');
   return JSON.parse(jsonFile);
 }
-function getRarityAndArray(data: Entity[]) {
+export function getRarityAndArray(data: Entity[]|item[]) {
   const dataEntity: number[] = [];
   const random: number = Math.floor(Math.random() * (100 - 1 + 1) + 1);
   let rarity: number = 1;

@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "name": "Friendship Cookie",
+        "desc": "It's Delicious",
+        "bigDesc": "Single use. restore full health.",
+        "rarity": 5
+    },
+    {
+        "id": 2,
+        "name": "Gerudo's Napalm Strike",
+        "desc": "Smells Great!",
+        "bigDesc": "Burn the enemy",
+        "rarity": 5
+    },
+    {
+        "id": 3,
+        "name": "Boomerang",
+        "desc": "Usually Comes Back",
+        "bigDesc": "Strength + 3",
+        "rarity": 3
+    },
+    {
+        "id": 4,
+        "name": "Shield of the Maiden",
+        "desc": "Block And Load",
+        "bigDesc": "Defense + 3",
+        "rarity": 3
+    },
+    {
+        "id": 5,
+        "name": "Ring of Ethereal Form",
+        "desc": "Get Ethereal!",
+        "bigDesc": "Defense + 10",
+        "rarity": 5
+    },
+    {
+        "id": 6,
+        "name": "Broccoli",
+        "desc": "Makes You Strong (not really)",
+        "bigDesc": "Single use. restore half health.",
+        "rarity": 1
+    },
+    {
+        "id": 7,
+        "name": "Rat Boots",
+        "desc": "Hover Craft",
+        "bigDesc": "Speed + 3",
+        "rarity": 2
+    },
+    {
+        "id": 8,
+        "name": "Seven-Leaf Clover",
+        "desc": "Lucky!",
+        "bigDesc": "luck + 3",
+        "rarity": 2
+    }
+]

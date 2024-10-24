@@ -4,10 +4,12 @@ import titleScreen, { difficulty, setFloor } from './basic_game_customization';
 import { getSave, save, SaveFile } from './save';
 import { Level, setExp } from './level_and_experience';
 import characterCreation from './character_creation';
+import { getItem, Inventory } from './inventory';
 
 const fs = require('fs');
 
 const player: Entity = characterCreation();
+const inventory: Inventory = {content: []}
 const lvl : Level = { expToLvlUp: 50, level: 1, currentExp: 0 };
 function continueGame(savefile: SaveFile) {
   const challenge: number = savefile.difficulty;
@@ -19,7 +21,7 @@ function continueGame(savefile: SaveFile) {
   while (i <= maxFloor && stillAlive && stillAliveBoss) {
     if (i % 10 === 0) {
       const boss: Entity = getEnemyDifficulty(getRandomEntity('resources/bosses.json'), challenge);
-      stillAliveBoss = bossCombat(i, boss, savefile.player, lvl);
+      stillAliveBoss = bossCombat(i, boss, savefile.player, lvl, inventory);
       if (stillAliveBoss) {
         next = save(savefile.player, i, challenge, maxFloor, lvl);
         if (next) {
@@ -32,7 +34,7 @@ function continueGame(savefile: SaveFile) {
       }
     } else {
       const enemy: Entity = getEnemyDifficulty(getRandomEntity('resources/enemies.json'), challenge);
-      stillAlive = combat(i, enemy, savefile.player, lvl);
+      stillAlive = combat(i, enemy, savefile.player, lvl, inventory);
       if (stillAlive) {
         next = save(savefile.player, i, challenge, maxFloor, lvl);
         if (next) {
@@ -64,9 +66,10 @@ function main() {
   while (i <= maxFloor && stillAlive && stillAliveBoss) {
     if (i % 10 === 0) {
       const boss: Entity = getEnemyDifficulty(getRandomEntity('resources/bosses.json'), challenge);
-      stillAliveBoss = bossCombat(i, boss, player, lvl);
+      stillAliveBoss = bossCombat(i, boss, player, lvl, inventory);
       if (stillAliveBoss) {
         setExp(lvl, player);
+        getItem(inventory);
         next = save(player, i, challenge, maxFloor, lvl);
         if (next) {
           console.log('Congratulations !! Moving to the next floor..');
@@ -78,9 +81,10 @@ function main() {
       }
     } else {
       const enemy: Entity = getEnemyDifficulty(getRandomEntity('resources/enemies.json'), challenge);
-      stillAlive = combat(i, enemy, player, lvl);
+      stillAlive = combat(i, enemy, player, lvl, inventory);
       if (stillAlive) {
         setExp(lvl, player);
+        getItem(inventory);
         next = save(player, i, challenge, maxFloor, lvl);
         if (next) {
           console.log('You win ! Moving to the next floor...');

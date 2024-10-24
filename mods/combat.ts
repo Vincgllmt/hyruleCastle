@@ -1,4 +1,5 @@
 import Entity from './entity';
+import { Inventory } from './inventory';
 import { Level } from './level_and_experience';
 import handleTurn from './more_statistics';
 
@@ -45,12 +46,12 @@ function combatDisplay(index: number, enemy: Entity, player: Entity) {
   handleHpAndMpDisplay(player);
   console.log('========== YOUR TURN ==========\n');
 }
-export default function combat(index: number, enemy: Entity, player: Entity, lvl: Level) {
+export default function combat(index: number, enemy: Entity, player: Entity, lvl: Level, inventory: Inventory) {
   let continu: boolean = true;
   while (enemy.hp > 0 && player.hp > 0 && continu === true) {
     combatDisplay(index, enemy, player);
-    const res: string = readline.question('1. Attack      2. Skills\n3. Protect     4. Escape\n5. Character\n');
-    continu = handleTurn(res, enemy, player, lvl);
+    const res: string = readline.question('1. Attack      2. Skills\n3. Protect     4. Escape\n5. Character\n6. Inventory');
+    continu = handleTurn(res, enemy, player, lvl, inventory);
     msleep(500);
   }
   if (enemy.hp <= 0 || continu === false) {
@@ -62,10 +63,10 @@ export default function combat(index: number, enemy: Entity, player: Entity, lvl
   console.log('You lose...');
   return false;
 }
-export function bossCombat(index: number, boss: Entity, player: Entity, lvl: Level) {
+export function bossCombat(index: number, boss: Entity, player: Entity, lvl: Level, inventory: Inventory) {
   console.log('You feel a strong opponent ahead...');
   msleep(1000);
   console.log('Prepare to fight !!!');
   msleep(500);
-  return combat(index, boss, player, lvl);
+  return combat(index, boss, player, lvl, inventory);
 }

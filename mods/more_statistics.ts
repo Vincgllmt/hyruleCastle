@@ -1,6 +1,7 @@
 import { getCharacter, getStrongest, getWeakness } from './basic_characteristics';
 import { msleep } from './combat';
 import Entity from './entity';
+import { displayInventory, Inventory } from './inventory';
 import { Level } from './level_and_experience';
 import { loadSkill, showSkills, Skill } from './magic_skills';
 
@@ -178,8 +179,8 @@ function handleTurnSkills(player: Entity, enemy: Entity, spells: Skill[]) {
     }
   }
 }
-export default function handleTurn(response: string, enemy: Entity, player: Entity, lvl: Level) {
-  const param: string[] = ['attack', '1', '2', 'skills', '3', 'protect', '4', 'escape', '5', 'character'];
+export default function handleTurn(response: string, enemy: Entity, player: Entity, lvl: Level, inventory: Inventory) {
+  const param: string[] = ['attack', '1', '2', 'skills', '3', 'protect', '4', 'escape', '5', 'character', '6', 'inventory'];
   const playerFirstTurn: boolean = enemy.spd < player.spd;
   let continu: boolean = true;
   while (param.indexOf(response.toLowerCase()) === -1) {
@@ -218,6 +219,11 @@ export default function handleTurn(response: string, enemy: Entity, player: Enti
       getCharacter(player, lvl);
       break;
     }
+    case '6':
+      case 'inventory': {
+        displayInventory(inventory)
+        break;
+      }
     default: {
       handleTurnSkills(player, enemy, loadSkill(player));
       break;
