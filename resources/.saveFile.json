@@ -1,0 +1,1 @@
+{"player":{"id":1,"name":"Link","hp":60,"maxhp":60,"mp":30,"maxmp":30,"str":15,"int":7,"def":8,"res":10,"spd":11,"luck":10,"race":1,"class":1,"rarity":1},"floor":2,"difficulty":1,"maxfloor":10,"level":{"expToLvlUp":50,"level":2,"currentExp":31}}

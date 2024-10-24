@@ -1,6 +1,7 @@
 import { getCharacter, getStrongest, getWeakness } from './basic_characteristics';
 import { msleep } from './combat';
 import Entity from './entity';
+import { Level } from './level_and_experience';
 import { loadSkill, showSkills, Skill } from './magic_skills';
 
 const readline = require('readline-sync');
@@ -177,7 +178,7 @@ function handleTurnSkills(player: Entity, enemy: Entity, spells: Skill[]) {
     }
   }
 }
-export default function handleTurn(response: string, enemy: Entity, player: Entity) {
+export default function handleTurn(response: string, enemy: Entity, player: Entity, lvl: Level) {
   const param = ['attack', '1', '2', 'skills', '3', 'protect', '4', 'escape', '5', 'character'];
   const playerFirstTurn = enemy.spd < player.spd;
   let continu = true;
@@ -214,7 +215,7 @@ export default function handleTurn(response: string, enemy: Entity, player: Enti
     }
     case '5':
     case 'character': {
-      getCharacter(player);
+      getCharacter(player, lvl);
       break;
     }
     default: {

@@ -19,7 +19,7 @@ function continueGame(savefile: SaveFile) {
   while (i <= maxFloor && stillAlive && stillAliveBoss) {
     if (i % 10 === 0) {
       const boss: Entity = getEnemyDifficulty(getRandomEntity('resources/bosses.json'), challenge);
-      stillAliveBoss = bossCombat(i, boss, savefile.player);
+      stillAliveBoss = bossCombat(i, boss, savefile.player, lvl);
       if (stillAliveBoss) {
         next = save(savefile.player, i, challenge, maxFloor, lvl);
         if (next) {
@@ -32,7 +32,7 @@ function continueGame(savefile: SaveFile) {
       }
     } else {
       const enemy: Entity = getEnemyDifficulty(getRandomEntity('resources/enemies.json'), challenge);
-      stillAlive = combat(i, enemy, savefile.player);
+      stillAlive = combat(i, enemy, savefile.player, lvl);
       if (stillAlive) {
         next = save(savefile.player, i, challenge, maxFloor, lvl);
         if (next) {
@@ -64,7 +64,7 @@ function main() {
   while (i <= maxFloor && stillAlive && stillAliveBoss) {
     if (i % 10 === 0) {
       const boss: Entity = getEnemyDifficulty(getRandomEntity('resources/bosses.json'), challenge);
-      stillAliveBoss = bossCombat(i, boss, player);
+      stillAliveBoss = bossCombat(i, boss, player, lvl);
       if (stillAliveBoss) {
         setExp(lvl, player);
         next = save(player, i, challenge, maxFloor, lvl);
@@ -78,7 +78,7 @@ function main() {
       }
     } else {
       const enemy: Entity = getEnemyDifficulty(getRandomEntity('resources/enemies.json'), challenge);
-      stillAlive = combat(i, enemy, player);
+      stillAlive = combat(i, enemy, player, lvl);
       if (stillAlive) {
         setExp(lvl, player);
         next = save(player, i, challenge, maxFloor, lvl);

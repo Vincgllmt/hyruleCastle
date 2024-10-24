@@ -1,4 +1,5 @@
 import Entity, { readJSON } from './entity';
+import { Level } from './level_and_experience';
 import { getNameClass } from './magic_skills';
 
 const readline = require('readline-sync');
@@ -58,15 +59,16 @@ export function getWeakness(player: Entity, index: number) {
   const classe: Classe = getClass(player);
   return classe.weaknesses;
 }
-export function getCharacter(player: Entity) {
-  console.log(`${player.name}: ${getNameRace(player)}, ${getNameClass(player)}`);
-  console.log('===========');
+export function getCharacter(player: Entity, lvl: Level) {
+  console.log(`${player.name}: ${getNameRace(player)}`);
+  console.log(`${getNameClass(player)} level ${lvl.level}`);
+  console.log('====================================');
   console.log(`HP: ${player.hp} / ${player.maxhp} | MP: ${player.mp} / ${player.maxmp}`);
-  console.log('===========');
-  console.log(`Def: ${player.def} | Res: ${player.res}`);
-  console.log('===========');
+  console.log('====================================');
+  console.log(`Def: ${player.def} | Res: ${player.res} | Str: ${player.str}`);
+  console.log('====================================');
   console.log(`Speed: ${player.spd}`);
   console.log(`Luck: ${player.luck}`);
-  console.log('===========');
+  console.log('====================================');
   readline.question('press anything to continue');
 }

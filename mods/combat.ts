@@ -1,4 +1,5 @@
 import Entity from './entity';
+import { Level } from './level_and_experience';
 import handleTurn from './more_statistics';
 
 const readline = require('readline-sync');
@@ -44,12 +45,12 @@ function combatDisplay(index: number, enemy: Entity, player: Entity) {
   handleHpAndMpDisplay(player);
   console.log('========== YOUR TURN ==========\n');
 }
-export default function combat(index: number, enemy: Entity, player: Entity) {
+export default function combat(index: number, enemy: Entity, player: Entity, lvl: Level) {
   let continu = true;
   while (enemy.hp > 0 && player.hp > 0 && continu === true) {
     combatDisplay(index, enemy, player);
     const res = readline.question('1. Attack      2. Skills\n3. Protect     4. Escape\n5. Character\n');
-    continu = handleTurn(res, enemy, player);
+    continu = handleTurn(res, enemy, player, lvl);
     msleep(500);
   }
   if (enemy.hp <= 0 || continu === false) {
@@ -61,10 +62,10 @@ export default function combat(index: number, enemy: Entity, player: Entity) {
   console.log('You lose...');
   return false;
 }
-export function bossCombat(index: number, boss: Entity, player: Entity) {
+export function bossCombat(index: number, boss: Entity, player: Entity, lvl: Level) {
   console.log('You feel a strong opponent ahead...');
   msleep(1000);
   console.log('Prepare to fight !!!');
   msleep(500);
-  return combat(index, boss, player);
+  return combat(index, boss, player, lvl);
 }
