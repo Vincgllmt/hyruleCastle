@@ -23,7 +23,7 @@ function continueGame(savefile: SaveFile) {
       const boss: Entity = getEnemyDifficulty(getRandomEntity('resources/bosses.json'), challenge);
       stillAliveBoss = bossCombat(i, boss, savefile.player, lvl, inventory);
       if (stillAliveBoss) {
-        next = save(savefile.player, i, challenge, maxFloor, lvl);
+        next = save(savefile.player, i, challenge, maxFloor, lvl, inventory);
         if (next) {
           console.log('Congratulations !! Moving to the next floor..');
           i += 1;
@@ -36,7 +36,7 @@ function continueGame(savefile: SaveFile) {
       const enemy: Entity = getEnemyDifficulty(getRandomEntity('resources/enemies.json'), challenge);
       stillAlive = combat(i, enemy, savefile.player, lvl, inventory);
       if (stillAlive) {
-        next = save(savefile.player, i, challenge, maxFloor, lvl);
+        next = save(savefile.player, i, challenge, maxFloor, lvl, inventory);
         if (next) {
           console.log('You win ! Moving to the next floor...');
           i += 1;
@@ -70,7 +70,7 @@ function main() {
       if (stillAliveBoss) {
         setExp(lvl, player);
         getItem(inventory);
-        next = save(player, i, challenge, maxFloor, lvl);
+        next = save(player, i, challenge, maxFloor, lvl, inventory);
         if (next) {
           console.log('Congratulations !! Moving to the next floor..');
           i += 1;
@@ -85,7 +85,7 @@ function main() {
       if (stillAlive) {
         setExp(lvl, player);
         getItem(inventory);
-        next = save(player, i, challenge, maxFloor, lvl);
+        next = save(player, i, challenge, maxFloor, lvl, inventory);
         if (next) {
           console.log('You win ! Moving to the next floor...');
           i += 1;

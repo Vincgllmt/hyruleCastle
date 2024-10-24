@@ -34,7 +34,9 @@ export function getItem(inventory: Inventory) {
       aItem = itemData[i];
     }
   }
-  console.log(`${aItem.name} was found !`);
+  console.log('========== ITEM ==========\n')
+  console.log(`${aItem.name} was found !\n`);
+  console.log('=============================')
   inventory.content.push(aItem);
 }
 function itemEffect(effect: string, player: Entity, enemy: Entity) {

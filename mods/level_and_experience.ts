@@ -7,6 +7,7 @@ export interface Level {
 }
 function levelUp(lvl: Level, player: Entity) {
   const forbiddenProp: string[] = ['id', 'name', 'hp', 'mp', 'rarity', 'class', 'race'];
+  console.log('========== LEVEL UP ==========\n')
   console.log(`Level up ! ${player.name} is now level ${lvl.level}`);
   let randomProp: string = Object.keys(player)[Math.floor(Math.random() * Object.keys(player).length)];
   while (forbiddenProp.indexOf(randomProp) !== -1) {
@@ -52,12 +53,13 @@ function levelUp(lvl: Level, player: Entity) {
       break;
     }
   }
-  console.log(`${player.name} gain +${random} in ${randomProp} !`);
+  console.log(`${player.name} gain +${random} in ${randomProp} !\n`);
 }
 export function setExp(lvl: Level, player: Entity) {
   const randomExp: number = Math.floor(Math.random() * (50 - 15 + 1) + 15);
   lvl.currentExp += randomExp;
-  console.log(`${player.name} gains ${randomExp} exp`);
+  console.log('\n========== EXP ==========\n')
+  console.log(`${player.name} gains ${randomExp} exp\n`);
   if (lvl.currentExp > lvl.expToLvlUp) {
     lvl.level += 1;
     lvl.currentExp -= lvl.expToLvlUp;

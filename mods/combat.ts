@@ -44,7 +44,7 @@ function combatDisplay(index: number, enemy: Entity, player: Entity) {
   handleHpAndMpDisplay(enemy);
   console.log(`   \x1b[32m${player.name}\x1b[0m`);
   handleHpAndMpDisplay(player);
-  console.log('========== YOUR TURN ==========\n');
+  console.log('========== OPTIONS ==========\n');
 }
 export default function combat(index: number, enemy: Entity, player: Entity, lvl: Level, inventory: Inventory) {
   let continu: boolean = true;
