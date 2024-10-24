@@ -23,7 +23,7 @@ export function readJSON(file: string) {
 function getRarityAndArray(data: Entity[]) {
   const dataEntity: number[] = [];
   const random: number = Math.floor(Math.random() * (100 - 1 + 1) + 1);
-  let rarity = 1;
+  let rarity: number = 1;
   if (random >= 51 && random <= 80) {
     rarity = 2;
   } else if (random >= 81 && random <= 95) {
@@ -46,7 +46,7 @@ function getRarityAndArray(data: Entity[]) {
 }
 export function getRandomEntity(path: string) {
   const data: Entity[] = readJSON(path);
-  const dataId = getRarityAndArray(readJSON(path));
+  const dataId: number = getRarityAndArray(readJSON(path));
   let entity: Entity = {
     name: '',
     id: 1,

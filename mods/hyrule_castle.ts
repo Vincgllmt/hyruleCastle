@@ -10,12 +10,12 @@ const fs = require('fs');
 const player: Entity = characterCreation();
 const lvl : Level = { expToLvlUp: 50, level: 1, currentExp: 0 };
 function continueGame(savefile: SaveFile) {
-  const challenge = savefile.difficulty;
-  const maxFloor = savefile.maxfloor;
-  let i = savefile.floor + 1;
-  let stillAlive = true;
-  let stillAliveBoss = true;
-  let next = true;
+  const challenge: number = savefile.difficulty;
+  const maxFloor: number = savefile.maxfloor;
+  let i: number = savefile.floor + 1;
+  let stillAlive: boolean = true;
+  let stillAliveBoss: boolean = true;
+  let next: boolean = true;
   while (i <= maxFloor && stillAlive && stillAliveBoss) {
     if (i % 10 === 0) {
       const boss: Entity = getEnemyDifficulty(getRandomEntity('resources/bosses.json'), challenge);
@@ -55,11 +55,11 @@ function continueGame(savefile: SaveFile) {
   }
 }
 function main() {
-  const challenge = difficulty();
-  const maxFloor = +setFloor();
-  let i = 1;
-  let stillAlive = true;
-  let stillAliveBoss = true;
+  const challenge: number = difficulty();
+  const maxFloor: number = +setFloor();
+  let i: number = 1;
+  let stillAlive: boolean = true;
+  let stillAliveBoss: boolean = true;
   let next = true;
   while (i <= maxFloor && stillAlive && stillAliveBoss) {
     if (i % 10 === 0) {

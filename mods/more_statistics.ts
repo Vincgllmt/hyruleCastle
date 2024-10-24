@@ -7,18 +7,18 @@ import { loadSkill, showSkills, Skill } from './magic_skills';
 const readline = require('readline-sync');
 
 function attack(caster: Entity, target: Entity) {
-  let casterAttack = Math.floor(caster.str);
-  const weakRace = getWeakness(caster, 1);
-  const strengthRace = getStrongest(caster, 1);
-  const weakClass = getWeakness(caster, 2);
-  const strengthClass = getStrongest(caster, 2);
-  let weak = false;
-  let strong = false;
-  let luck = false;
-  const dodge = caster.spd - target.spd;
-  let dodgePossible = false;
-  const randomDodge = Math.floor(Math.random() * (100 - 1 + 1) + 1);
-  const randomCrit = Math.floor(Math.random() * (100 - 1 + 1) + 1);
+  let casterAttack: number = Math.floor(caster.str);
+  const weakRace: number[] = getWeakness(caster, 1);
+  const strengthRace: number[] = getStrongest(caster, 1);
+  const weakClass: number[] = getWeakness(caster, 2);
+  const strengthClass: number[] = getStrongest(caster, 2);
+  let weak: boolean = false;
+  let strong: boolean = false;
+  let luck: boolean = false;
+  const dodge: number = caster.spd - target.spd;
+  let dodgePossible: boolean = false;
+  const randomDodge: number = Math.floor(Math.random() * (100 - 1 + 1) + 1);
+  const randomCrit: number = Math.floor(Math.random() * (100 - 1 + 1) + 1);
   // weakRace
   if (weakRace.includes(target.race)) {
     casterAttack /= 2;
@@ -70,18 +70,18 @@ function attack(caster: Entity, target: Entity) {
   msleep(250);
 }
 function skills(caster: Entity, target: Entity, spell: Skill) {
-  const weakRace = getWeakness(caster, 1);
-  const strengthRace = getStrongest(caster, 1);
-  const weakClass = getWeakness(caster, 2);
-  const strengthClass = getStrongest(caster, 2);
-  let weak = false;
-  let strong = false;
-  let luck = false;
-  const dodge = caster.spd - target.spd;
-  let dodgePossible = false;
-  const randomDodge = Math.floor(Math.random() * (100 - 1 + 1) + 1);
-  const randomCrit = Math.floor(Math.random() * (100 - 1 + 1) + 1);
-  let spellAtk = spell.dmg;
+  const weakRace: number[] = getWeakness(caster, 1);
+  const strengthRace: number[] = getStrongest(caster, 1);
+  const weakClass: number[] = getWeakness(caster, 2);
+  const strengthClass: number[] = getStrongest(caster, 2);
+  let weak: boolean = false;
+  let strong: boolean = false;
+  let luck: boolean = false;
+  const dodge: number = caster.spd - target.spd;
+  let dodgePossible: boolean = false;
+  const randomDodge: number = Math.floor(Math.random() * (100 - 1 + 1) + 1);
+  const randomCrit: number = Math.floor(Math.random() * (100 - 1 + 1) + 1);
+  let spellAtk: number = spell.dmg;
   if (spell !== undefined && spell.dmg > 0) {
     // weakRace
     if (weakRace.includes(target.race)) {
@@ -131,7 +131,7 @@ function skills(caster: Entity, target: Entity, spell: Skill) {
     const splitted = spell.effect.split('_');
     if (splitted[0].toLowerCase() === 'heal') {
       caster.hp += +splitted[1];
-      const diff = caster.hp - caster.maxhp;
+      const diff: number = caster.hp - caster.maxhp;
       if (diff > 0) {
         caster.hp -= diff;
       }
@@ -139,7 +139,7 @@ function skills(caster: Entity, target: Entity, spell: Skill) {
       caster.mp -= spell.cost
     } else {
       caster.mp += +splitted[1];
-      const diff = caster.mp - caster.maxmp;
+      const diff: number = caster.mp - caster.maxmp;
       if (diff > 0) {
         caster.mp -= diff;
       }
@@ -162,7 +162,7 @@ function handleTurnAttack(playerFirstTurn: boolean, enemy: Entity, player: Entit
   }
 }
 function handleTurnSkills(player: Entity, enemy: Entity, spells: Skill[]) {
-  const playerFirstTurn = enemy.spd < player.spd;
+  const playerFirstTurn: boolean = enemy.spd < player.spd;
   const skill = showSkills(spells, player);
   if (skill !== false) {
     if (playerFirstTurn) {
@@ -179,9 +179,9 @@ function handleTurnSkills(player: Entity, enemy: Entity, spells: Skill[]) {
   }
 }
 export default function handleTurn(response: string, enemy: Entity, player: Entity, lvl: Level) {
-  const param = ['attack', '1', '2', 'skills', '3', 'protect', '4', 'escape', '5', 'character'];
-  const playerFirstTurn = enemy.spd < player.spd;
-  let continu = true;
+  const param: string[] = ['attack', '1', '2', 'skills', '3', 'protect', '4', 'escape', '5', 'character'];
+  const playerFirstTurn: boolean = enemy.spd < player.spd;
+  let continu: boolean = true;
   while (param.indexOf(response.toLowerCase()) === -1) {
     response = readline.question('Wrong, use an actual option !\n1. Attack      2. Skills\n');
   }

@@ -46,10 +46,10 @@ function combatDisplay(index: number, enemy: Entity, player: Entity) {
   console.log('========== YOUR TURN ==========\n');
 }
 export default function combat(index: number, enemy: Entity, player: Entity, lvl: Level) {
-  let continu = true;
+  let continu: boolean = true;
   while (enemy.hp > 0 && player.hp > 0 && continu === true) {
     combatDisplay(index, enemy, player);
-    const res = readline.question('1. Attack      2. Skills\n3. Protect     4. Escape\n5. Character\n');
+    const res: string = readline.question('1. Attack      2. Skills\n3. Protect     4. Escape\n5. Character\n');
     continu = handleTurn(res, enemy, player, lvl);
     msleep(500);
   }
