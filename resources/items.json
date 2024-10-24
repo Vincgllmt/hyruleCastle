@@ -62,5 +62,61 @@
         "bigDesc": "luck + 3",
         "effect": "luck_3",
         "rarity": 2
+    },
+    {
+        "id": 9,
+        "name": "Bomb",
+        "desc": "Use For Boom",
+        "bigDesc": "Deal damage to the enemy",
+        "effect": "attack_10",
+        "rarity": 1
+    },
+    {
+        "id": 10,
+        "name": "+1 Gantelet",
+        "desc": "Hit a bit more hard",
+        "bigDesc": "Strength + 1",
+        "effect": "strength_1",
+        "rarity": 1
+    },
+    {
+        "id": 11,
+        "name": "Heavy Boots",
+        "desc": "Low Center Of Mass",
+        "bigDesc": "Defense + 1",
+        "effect": "defense_1",
+        "rarity": 1
+    },
+    {
+        "id": 12,
+        "name": "Wax Wings",
+        "desc": "Too Close To The Sun",
+        "bigDesc": "Speed + 1",
+        "effect": "speed_1",
+        "rarity": 1
+    },
+    {
+        "id": 13,
+        "name": "Sunglasses",
+        "desc": "Bright Future",
+        "bigDesc": "luck + 1",
+        "effect": "luck_1",
+        "rarity": 1
+    },
+    {
+        "id": 14,
+        "name": "Ruby Bracelet",
+        "desc": "Moving Forward",
+        "bigDesc": "luck + 5",
+        "effect": "luck_5",
+        "rarity": 4
+    },
+    {
+        "id": 15,
+        "name": "Bloodied Scarf",
+        "desc": "Blink Away",
+        "bigDesc": "Speed + 5",
+        "effect": "speed_5",
+        "rarity": 4
     }
 ]
