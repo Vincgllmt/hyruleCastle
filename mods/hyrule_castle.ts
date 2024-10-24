@@ -3,10 +3,11 @@ import combat, { bossCombat, getEnemyDifficulty, msleep } from './combat';
 import titleScreen, { difficulty, setFloor } from './basic_game_customization';
 import { getSave, save, SaveFile } from './save';
 import { Level, setExp } from './level_and_experience';
+import characterCreation from './character_creation';
 
 const fs = require('fs');
 
-const player: Entity = getRandomEntity('resources/players.json');
+const player: Entity = characterCreation();
 const lvl : Level = { expToLvlUp: 50, level: 1, currentExp: 0 };
 function continueGame(savefile: SaveFile) {
   const challenge = savefile.difficulty;
