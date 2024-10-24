@@ -186,6 +186,7 @@ export default function handleTurn(response: string, enemy: Entity, player: Enti
   while (param.indexOf(response.toLowerCase()) === -1) {
     response = readline.question('Wrong, use an actual option !\n1. Attack      2. Skills\n');
   }
+  console.log('========== ACTION ==========\n')
   switch (response) {
     case '1':
     case 'attack': {
