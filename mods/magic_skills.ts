@@ -15,7 +15,7 @@ export function getNameClass(player: Entity) {
   const classes = readJSON('resources/classes.json');
   for (let i = 0; i < classes.length; i += 1) {
     if (classes[i].id === player.class) {
-      return classes[i].name;
+      return classes[i].name.toLowerCase();
     }
   }
   return false;
