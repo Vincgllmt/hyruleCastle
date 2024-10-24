@@ -60,5 +60,5 @@ export function getCharacter(player: Entity, lvl: Level) {
   console.log(`Speed: ${player.spd}`);
   console.log(`Luck: ${player.luck}`);
   console.log('====================================');
-  readline.question('press anything to continue');
+  readline.question('press anything to continue\n');
 }
