@@ -1,7 +1,7 @@
 import { getCharacter, getStrongest, getWeakness } from './basic_characteristics';
 import { msleep } from './combat';
 import Entity from './entity';
-import { displayInventory, Inventory, useInventoryItem } from './inventory';
+import { Inventory, useInventoryItem } from './inventory';
 import { Level } from './level_and_experience';
 import { loadSkill, showSkills, Skill } from './magic_skills';
 
@@ -55,9 +55,8 @@ function attack(caster: Entity, target: Entity) {
       console.log(`${caster.name} made a crushing hit !`);
     }
     if (casterAttack - target.def <= 0) {
-      console.log(`${caster.name} is too weak to make a hit !`)
-    }
-    else {
+      console.log(`${caster.name} is too weak to make a hit !`);
+    } else {
       target.hp -= casterAttack - target.def;
       if (luck) {
         console.log(`CRITICAL HIT | ${caster.name} attack the ${target.name} ! Dealing ${(casterAttack) - target.def} of damage !! `);
@@ -127,7 +126,7 @@ function skills(caster: Entity, target: Entity, spell: Skill) {
     } else {
       console.log(`${target.name} dodged !`);
     }
-    caster.mp -= spell.cost
+    caster.mp -= spell.cost;
   } else if (spell !== undefined && spell.dmg !== 0) {
     const splitted = spell.effect.split('_');
     if (splitted[0].toLowerCase() === 'heal') {
@@ -137,7 +136,7 @@ function skills(caster: Entity, target: Entity, spell: Skill) {
         caster.hp -= diff;
       }
       console.log(`You healed of ${splitted[1]} hp !`);
-      caster.mp -= spell.cost
+      caster.mp -= spell.cost;
     } else {
       caster.mp += +splitted[1];
       const diff: number = caster.mp - caster.maxmp;
@@ -145,7 +144,7 @@ function skills(caster: Entity, target: Entity, spell: Skill) {
         caster.mp -= diff;
       }
       console.log(`You restored of ${splitted[1]} mp !`);
-    } 
+    }
   }
   msleep(250);
 }
@@ -179,14 +178,20 @@ function handleTurnSkills(player: Entity, enemy: Entity, spells: Skill[]) {
     }
   }
 }
-export default function handleTurn(response: string, enemy: Entity, player: Entity, lvl: Level, inventory: Inventory) {
+export default function handleTurn(
+  response: string,
+  enemy: Entity,
+  player: Entity,
+  lvl: Level,
+  inventory: Inventory,
+) {
   const param: string[] = ['attack', '1', '2', 'skills', '3', 'protect', '4', 'escape', '5', 'character', '6', 'inventory'];
   const playerFirstTurn: boolean = enemy.spd < player.spd;
   let continu: boolean = true;
   while (param.indexOf(response.toLowerCase()) === -1) {
     response = readline.question('Wrong, use an actual option !\n1. Attack      2. Skills\n');
   }
-  console.log('========== ACTION ==========\n')
+  console.log('========== ACTION ==========\n');
   switch (response) {
     case '1':
     case 'attack': {
@@ -221,10 +226,10 @@ export default function handleTurn(response: string, enemy: Entity, player: Enti
       break;
     }
     case '6':
-      case 'inventory': {
-        useInventoryItem(inventory, player, enemy)
-        break;
-      }
+    case 'inventory': {
+      useInventoryItem(inventory, player, enemy);
+      break;
+    }
     default: {
       handleTurnSkills(player, enemy, loadSkill(player));
       break;

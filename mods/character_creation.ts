@@ -1,4 +1,6 @@
-import { Classe, getClass, getRace, Race } from './basic_characteristics';
+import {
+  Classe, getClass, getRace, Race,
+} from './basic_characteristics';
 import Entity, { getRandomEntity, readJSON } from './entity';
 
 const rl = require('readline-sync');
@@ -123,8 +125,6 @@ export default function characterCreation(): Entity {
     addPointMpHp(player);
     addPoint(player);
   }
-  
+
   return player;
 }
-
-

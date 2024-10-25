@@ -46,7 +46,13 @@ function combatDisplay(index: number, enemy: Entity, player: Entity) {
   handleHpAndMpDisplay(player);
   console.log('========== OPTIONS ==========\n');
 }
-export default function combat(index: number, enemy: Entity, player: Entity, lvl: Level, inventory: Inventory) {
+export default function combat(
+  index: number,
+  enemy: Entity,
+  player: Entity,
+  lvl: Level,
+  inventory: Inventory,
+) {
   let continu: boolean = true;
   while (enemy.hp > 0 && player.hp > 0 && continu === true) {
     combatDisplay(index, enemy, player);
@@ -63,7 +69,13 @@ export default function combat(index: number, enemy: Entity, player: Entity, lvl
   console.log('You lose...');
   return false;
 }
-export function bossCombat(index: number, boss: Entity, player: Entity, lvl: Level, inventory: Inventory) {
+export function bossCombat(
+  index: number,
+  boss: Entity,
+  player: Entity,
+  lvl: Level,
+  inventory: Inventory,
+) {
   console.log('You feel a strong opponent ahead...');
   msleep(1000);
   console.log('Prepare to fight !!!');

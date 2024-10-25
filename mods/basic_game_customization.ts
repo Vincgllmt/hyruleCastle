@@ -57,10 +57,9 @@ export function difficulty() {
   }
   let diffModifier = 1;
   if (res === '2') {
-    diffModifier = 1.5
-  }
-  else if (res === '3') {
-    diffModifier = 2
+    diffModifier = 1.5;
+  } else if (res === '3') {
+    diffModifier = 2;
   }
   return diffModifier;
 }
@@ -71,6 +70,6 @@ export function setFloor() {
   while (res !== '10' && res !== '20' && res !== '50' && res !== '100') {
     res = readline.question('Choose between the correct options\n10.\n20.\n50.\n100.\n');
   }
-  console.clear()
+  console.clear();
   return res;
 }

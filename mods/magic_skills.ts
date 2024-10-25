@@ -47,23 +47,23 @@ function useSkill(param: string[], player: Entity) {
   if (param.indexOf(res) !== -1 || res.toLowerCase() !== 'cancel') {
     if (res.toLowerCase() !== 'cancel' && res !== '') {
       let skill = getSkill(+res);
-    while (player.mp < skill.cost && res !== 'cancel') {
-      console.log(`can't use it ! No enough MP (${player.mp})`);
-      res = readline.question('Use the id of the spells that is shown !\nWhat spell do you want to use ?\n');
-      skill = getSkill(+res);
-    }
-    return skill;
+      while (player.mp < skill.cost && res !== 'cancel') {
+        console.log(`can't use it ! No enough MP (${player.mp})`);
+        res = readline.question('Use the id of the spells that is shown !\nWhat spell do you want to use ?\n');
+        skill = getSkill(+res);
+      }
+      return skill;
     }
   }
   return false;
 }
 export function showSkills(spells: Skill[], player: Entity) {
   const param: string[] = [];
-  console.log('========== SKILLS ==========')
+  console.log('========== SKILLS ==========');
   for (let i = 0; i < spells.length; i += 1) {
     console.log(`${spells[i].id}. ${spells[i].name}\n`);
     param.push(`${spells[i].id}`);
   }
-  console.log('=============================')
-  return useSkill(param, player)
+  console.log('=============================');
+  return useSkill(param, player);
 }

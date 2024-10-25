@@ -9,7 +9,7 @@ import { getItem, Inventory } from './inventory';
 const fs = require('fs');
 
 const player: Entity = characterCreation();
-const inventory: Inventory = {content: []}
+const inventory: Inventory = { content: [] };
 const lvl : Level = { expToLvlUp: 50, level: 1, currentExp: 0 };
 function continueGame(savefile: SaveFile) {
   const challenge: number = savefile.difficulty;

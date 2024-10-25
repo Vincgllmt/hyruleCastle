@@ -16,12 +16,12 @@ export interface Inventory {
 }
 export function displayInventory(inventory: Inventory) {
   let count: number = 0;
-  console.log('========== INVENTORY ==========\n')
+  console.log('========== INVENTORY ==========\n');
   inventory.content.forEach((item) => {
     console.log(`${count} - ${item.name}\n"${item.desc}"\n${item.bigDesc}\n`);
     count += 1;
   });
-  console.log('===============================')
+  console.log('===============================');
 }
 export function getItem(inventory: Inventory) {
   const itemData: Item[] = readJSON('resources/items.json');
@@ -34,9 +34,9 @@ export function getItem(inventory: Inventory) {
       aItem = itemData[i];
     }
   }
-  console.log('========== ITEM ==========\n')
+  console.log('========== ITEM ==========\n');
   console.log(`${aItem.name} was found !\n`);
-  console.log('=============================')
+  console.log('=============================');
   inventory.content.push(aItem);
 }
 function itemEffect(effect: string, player: Entity, enemy: Entity) {
