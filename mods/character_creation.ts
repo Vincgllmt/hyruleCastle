@@ -32,7 +32,7 @@ function addPointMpHp(player: Entity) {
   const random: number = Math.floor(Math.random() * (100 - 80 + 1) + 80);
   console.log(`You have ${random} points to put in MP/HP`);
   let res: string = rl.question('Choose the point you\'ll attribute on HP (the rest will be in MP)\n');
-  while (+res > random || +res === 0) {
+  while (+res > random || +res <= 0) {
     res = rl.question('Choose the point you\'ll attribute on HP (the rest will be in MP)\n');
   }
   player.maxhp = +res;
