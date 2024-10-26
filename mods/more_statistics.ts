@@ -7,39 +7,40 @@ import { loadSkill, showSkills, Skill } from './magic_skills';
 
 const readline = require('readline-sync');
 
-function attack(caster: Entity, target: Entity) {
+function getRealAttack(caster: Entity, target: Entity, spell: Skill | null | undefined) {
   let casterAttack: number = Math.floor(caster.str);
+  if (spell !== null && spell !== undefined) {
+   casterAttack = spell.dmg 
+  }
   const weakRace: number[] = getWeakness(caster, 1);
   const strengthRace: number[] = getStrongest(caster, 1);
   const weakClass: number[] = getWeakness(caster, 2);
   const strengthClass: number[] = getStrongest(caster, 2);
-  let weak: boolean = false;
-  let strong: boolean = false;
+  // weakRace
+  if (weakRace.includes(target.race)) {
+    casterAttack /= 2;
+  }
+  // weakClass
+  if (weakClass.includes(target.class)) {
+    casterAttack /= 2;
+  }
+  // strengthRace
+  if (strengthRace.includes(target.race)) {
+    casterAttack *= 2;
+  }
+  // strengthRace
+  if (strengthClass.includes(target.class)) {
+    casterAttack *= 2;
+  }
+  return casterAttack
+}
+function attack(caster: Entity, target: Entity) {
+  let casterAttack = getRealAttack(caster, target, null)
   let luck: boolean = false;
   const dodge: number = caster.spd - target.spd;
   let dodgePossible: boolean = false;
   const randomDodge: number = Math.floor(Math.random() * (100 - 1 + 1) + 1);
   const randomCrit: number = Math.floor(Math.random() * (100 - 1 + 1) + 1);
-  // weakRace
-  if (weakRace.includes(target.race)) {
-    casterAttack /= 2;
-    weak = true;
-  }
-  // weakClass
-  if (weakClass.includes(target.class)) {
-    casterAttack /= 2;
-    weak = true;
-  }
-  // strengthRace
-  if (strengthRace.includes(target.race)) {
-    casterAttack *= 2;
-    strong = true;
-  }
-  // strengthRace
-  if (strengthClass.includes(target.class)) {
-    casterAttack *= 2;
-    strong = true;
-  }
   if (randomCrit <= target.luck) {
     luck = true;
     casterAttack *= 2;
@@ -48,10 +49,10 @@ function attack(caster: Entity, target: Entity) {
     dodgePossible = true;
   }
   if (dodgePossible !== true) {
-    if (weak && !strong) {
+    if (caster.str > casterAttack) {
       console.log(`${caster.name} made a glancing hit.. !`);
     }
-    if (!weak && strong) {
+    if (caster.str < casterAttack) {
       console.log(`${caster.name} made a crushing hit !`);
     }
     if (casterAttack - target.def <= 0) {
@@ -70,39 +71,13 @@ function attack(caster: Entity, target: Entity) {
   msleep(250);
 }
 function skills(caster: Entity, target: Entity, spell: Skill) {
-  const weakRace: number[] = getWeakness(caster, 1);
-  const strengthRace: number[] = getStrongest(caster, 1);
-  const weakClass: number[] = getWeakness(caster, 2);
-  const strengthClass: number[] = getStrongest(caster, 2);
-  let weak: boolean = false;
-  let strong: boolean = false;
   let luck: boolean = false;
   const dodge: number = caster.spd - target.spd;
   let dodgePossible: boolean = false;
   const randomDodge: number = Math.floor(Math.random() * (100 - 1 + 1) + 1);
   const randomCrit: number = Math.floor(Math.random() * (100 - 1 + 1) + 1);
-  let spellAtk: number = spell.dmg;
+  let spellAtk: number = getRealAttack(caster, target, spell);
   if (spell !== undefined && spell.dmg > 0) {
-    // weakRace
-    if (weakRace.includes(target.race)) {
-      spellAtk /= 2;
-      weak = true;
-    }
-    // weakClass
-    if (weakClass.includes(target.class)) {
-      spellAtk /= 2;
-      weak = true;
-    }
-    // strengthRace
-    if (strengthRace.includes(target.race)) {
-      spellAtk *= 2;
-      strong = true;
-    }
-    // strengthRace
-    if (strengthClass.includes(target.class)) {
-      spellAtk *= 2;
-      strong = true;
-    }
     if (randomCrit <= target.luck) {
       luck = true;
       spellAtk *= 2;
@@ -111,10 +86,10 @@ function skills(caster: Entity, target: Entity, spell: Skill) {
       dodgePossible = true;
     }
     if (dodgePossible !== true) {
-      if (weak && !strong) {
+      if (spellAtk < spell.dmg) {
         console.log(`${caster.name} made a glancing hit..`);
       }
-      if (!weak && strong) {
+      if (spellAtk > spell.dmg) {
         console.log(`${caster.name} made a crushing hit !`);
       }
       target.hp -= spellAtk - target.res;
