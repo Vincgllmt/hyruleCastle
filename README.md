@@ -10,10 +10,10 @@ npm install
 
 Version simple
 ```sh
-ts-node base-game/hyrule.ts
+ts-node base_game/hyrule.ts
 ```
 
 Version poussée
 ```sh
-ts-node modded/hyrule.ts
+ts-node mods/hyrule.ts
 ```
