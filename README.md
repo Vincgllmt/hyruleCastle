@@ -1,2 +1,9 @@
-# Groupe de guille_b 1044104
+# Hyrule castle
 
+## Installation
+
+```sh
+npm install
+```
+
+## Lancer le jeu
